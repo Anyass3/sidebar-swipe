@@ -1,0 +1,19 @@
+touch temp.js
+echo "Created temp.js"
+
+head -n -1 src/index.js > temp.js
+echo "Copied index.js to excluding the last line temp.js"
+
+babel temp.js --out-file dist/lib/index.js
+echo "Compiled temp.js to dist/lib/index.js with babel"
+
+terser -c -m -- dist/lib/index.js > dist/lib/index.min.js
+echo "Minified dist/lib/index.js to dist/lib/index.min.js"
+
+
+terser -c -m -- temp.js > dist/lib/mb.index.min.js
+echo "Minified src/index.js to dist/lib/mb.index.min.js"
+
+
+rm temp.js
+echo "removed temp.js"

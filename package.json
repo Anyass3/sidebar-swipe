@@ -1,0 +1,45 @@
+{
+  "name": "sidebar-swipe",
+  "version": "0.5.0",
+  "description": "This is a swipable sidebar nav",
+  "svelte": "src/svelte/index.js",
+  "jsdelivr": "dist/lib/index.min.js",
+  "module": "dist/component/index.mjs",
+  "main": "dist/component/index.js",
+  "custom_module": "dist/customElement/index.mjs",
+  "custom_main": "dist/customElement/index.js",
+  "scripts": {
+    "build": "chmod +x .build && ./.build && rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "sidebar",
+    "swipe",
+    "navbar",
+    "side-swipe",
+    "nav-swipe",
+    "nav",
+    "svelte"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anyass3/sidebar-swipe.git"
+  },
+  "author": "Abdoulie Nyass",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "rollup": "^2.0.0",
+    "rollup-plugin-svelte": "^6.0.0",
+    "svelte": "^3.0.0",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.1"
+  },
+  "files": [
+    "src",
+    "dist"
+  ]
+}
