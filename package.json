@@ -1,6 +1,6 @@
 {
   "name": "sidebar-swipe",
-  "version": "0.5.0",
+  "version": "0.6.1",
   "description": "This is a swipable sidebar nav",
   "svelte": "src/svelte/index.js",
   "jsdelivr": "dist/lib/index.min.js",

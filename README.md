@@ -1,15 +1,21 @@
 ## This is a vanilla Javascript Sidebar Swipeable for touch screen devices
-[link to demo](https://sidebar-swipe.netlify.app/)
+[link to demo](https://sidebar-swipe.netlify.app/demo/)
+
+### NOTE: FOR SVELTE
+    check the example in the svelte repl demo on how to use it's svelte component.
+
+    Because for svelte it's a component not just a lib.
+[demo for svelte](https://svelte.dev/repl/474bd480f1864a2a8e0de961ba5226e7?version=3.29.7)
 
 # Installation
 ### option 1: use the cdn
 Add the script to your file
 ```html
 compiled with babel for browser compatibility
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.4.0/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.6.1/dist/lib/index.min.js"></script>
 
 or may only be compatible for modern browsers.
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.4.0/dist/mb.index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.6.1/dist/lib/mb.index.min.js"></script>
 ```
 
 ### option 2: using npm
@@ -25,7 +31,7 @@ import SideBarSwipe from 'sidebar-swipe'
 defaults: sidebar left
 ```html
 <div id="side-bar" style="display: none">
-    <nav style="width:80%">
+    <nav width=76>
         <slot></slot>
     </nav>
 </div>
@@ -33,11 +39,15 @@ defaults: sidebar left
 for sidebar right:- add a right to attribute to the side-bar element
 ```html
 <div id="side-bar" style="display: none" right>
-    <nav style="width:80%">
+    <nav width=76>
         <slot></slot>
     </nav>
 </div>
 ```
+##### NOTE:
+
+width is in percentage(%)
+
 the "style='display: none'" is recommeded
 
 you can use other html tags instead of nav example div
@@ -54,7 +64,7 @@ new SideBarSwipe('#side-bar',options)
 </script>
 ```
 
-###opening and closing the sidebar
+### opening and closing the sidebar
 ```javascript
 swipe.open() // to open the sidebar
 swipe.close() // to close the sidebar

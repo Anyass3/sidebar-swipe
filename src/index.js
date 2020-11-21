@@ -4,7 +4,7 @@ class SideBarSwipe {
       {
         sideOpacity = 0.2,
         transitionDuration = 300,
-        maxScreenWidth = 786,
+        maxScreenWidth = 768,
         transitionTimingFunc='ease'
       } = {},
     ) {
@@ -27,7 +27,15 @@ class SideBarSwipe {
       this.initEvents();
     }
     get right(){
-      return this.swipe.hasAttribute('right');
+      return this.swipe.hasAttribute('right')&&(this.swipe.getAttribute('right')!=='false');
+    }
+    set right(val){
+      this.swipe.setAttribute('right',val);
+      this.initStart()
+    }
+    get width(){
+      const w=this.swipe.firstElementChild.getAttribute('width')
+      return !w?"80%":(/^[0-9]+$/.test(`${w}`)?w+'%':w)
     }
     _navtransition_(val=true){
       this.swipe.firstElementChild.style.transition = val?`transform ${this.duration}ms ${this.timingFn}`:'';
@@ -40,6 +48,7 @@ class SideBarSwipe {
         this.swipe.style.height = '100vh';
         this.swipe.style.transition = 'background .5s ease'
         this.swipe.style.background = 'rgba(0,0,0,0)';
+        this.swipe.firstElementChild.style.width=this.width;
         this.swipe.addEventListener('click', (ev) => {
           if (ev.target === ev.currentTarget) this.close()
         })
@@ -55,6 +64,7 @@ class SideBarSwipe {
           this.swipe.style.transition = '';
           this.swipe.style.width = '';
           this.swipe.style.background = '';
+          this.swipe.firstElementChild.width='';
           this.swipe.removeEventListener('click', (ev) => {
           if (ev.target === ev.currentTarget) this.close()
         })
@@ -93,8 +103,7 @@ class SideBarSwipe {
     endFn() {
       if (screen.availWidth <= this.screenWidth) {
         if (this.touchType === 'move') {
-          const width = this.swipe.offsetWidth
-          ;(this.beforeEndTranslate / width) * 100 > 40
+          ;(this.beforeEndTranslate / this.swipe.offsetWidth) * 100 > 40
             ? this.close()
             : this.open()
           this.touchType = 'end';

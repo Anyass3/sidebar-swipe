@@ -1,1 +1,4 @@
-export { default as default } from './SideBarSwipeable.svelte';
+import SideBarSwipe from './SideBarSwipe.svelte';
+import swipe from "./swipe.js"
+
+export { SideBarSwipe, swipe as sidebarswipe }
