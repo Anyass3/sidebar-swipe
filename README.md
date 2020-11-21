@@ -12,10 +12,10 @@
 Add the script to your file
 ```html
 compiled with babel for browser compatibility
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.6.1/dist/lib/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.0/dist/lib/index.min.js"></script>
 
 or may only be compatible for modern browsers.
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.6.1/dist/lib/mb.index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.0/dist/lib/mb.index.min.js"></script>
 ```
 
 ### option 2: using npm

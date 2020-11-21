@@ -64,7 +64,7 @@ class SideBarSwipe {
           this.swipe.style.transition = '';
           this.swipe.style.width = '';
           this.swipe.style.background = '';
-          this.swipe.firstElementChild.width='';
+          this.swipe.firstElementChild.style.width='';
           this.swipe.removeEventListener('click', (ev) => {
           if (ev.target === ev.currentTarget) this.close()
         })
