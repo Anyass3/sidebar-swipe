@@ -21,11 +21,18 @@
         padding:0;
         }
         
+        @media(min-width: 900px){
+            button{
+                display:none !important;
+            }
+        }
+        
     </style>
 </head>
 <body>
     <div id="swiper" right style="display: none;">
         <nav width=75 style="background:lightblue">
+            <h2>minimize screen to see effect</h2>
             <p>right sideBar</p>
             <ul>
                 <li>Menu Item 1</li>
@@ -37,6 +44,7 @@
     </div>
     <div id="swipel" style="display: none;">
         <nav width=75 style="background:lightblue">
+            <h2>minimize screen to see effect</h2>
             <p>left sideBar</p>
             <ul>
                 <li>Menu Item 1</li>
@@ -47,14 +55,9 @@
         </nav>
     </div>
     
+
+
     <div style="justify-content:space-around;display: flex;">
-        <button onclick="swipel.toggle()">
-            <svg viewBox="0 0 24 24" width="2em" height="2em" fill="currentColor">
-                <path
-                  d="M3.444 5.422a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444z"
-                  fill-rule="evenodd" />
-            </svg>
-        </button>
         <button onclick="swiper.toggle()">
             <svg viewBox="0 0 24 24" width="2em" height="2em" fill="currentColor">
               <path
@@ -62,12 +65,19 @@
                 fill-rule="evenodd" />
             </svg>
         </button>
+        <button onclick="swipel.toggle()">
+            <svg viewBox="0 0 24 24" width="2em" height="2em" fill="currentColor">
+                <path
+                  d="M3.444 5.422a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444z"
+                  fill-rule="evenodd" />
+            </svg>
+        </button>
     </div>
-    <!-- <script src="../dist/lib/index.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.0/dist/lib/index.min.js"></script>
+    <script src="../dist/lib/index.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.0/dist/lib/index.min.js"></script> -->
     <script>
-        let swiper=new SideBarSwipe("#swiper",{sideOpacity:0.1,transitionTimingFunc:'ease-in-out',maxScreenWidth:2000})
-        let swipel=new SideBarSwipe("#swipel",{sideOpacity:0.1,maxScreenWidth:2000})
+        let swiper=new SideBarSwipe("#swiper",{sideOpacity:0.1,transitionTimingFunc:'ease-in-out',maxScreenWidth:900})
+        let swipel=new SideBarSwipe("#swipel",{sideOpacity:0.1,maxScreenWidth:900})
     </script>
 </body>
 </html>

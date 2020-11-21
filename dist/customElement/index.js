@@ -607,12 +607,13 @@
         }
         // methods
         initStart() {
-          if (screen.availWidth <= this.screenWidth) {
+          if (window.innerWidth <= this.screenWidth) {
             this.swipe.style.width = '100%';
             this.swipe.style.position = 'fixed';
             this.swipe.style.height = '100vh';
             this.swipe.style.transition = 'background .5s ease';
             this.swipe.style.background = 'rgba(0,0,0,0)';
+            this.swipe.style.display = 'none';
             this.swipe.firstElementChild.style.width=this.width;
             this.swipe.addEventListener('click', (ev) => {
               if (ev.target === ev.currentTarget) this.close();
@@ -629,6 +630,8 @@
               this.swipe.style.transition = '';
               this.swipe.style.width = '';
               this.swipe.style.background = '';
+              this.swipe.style.display = '';
+              this.swipe.style.justifyContent='';
               this.swipe.firstElementChild.style.width='';
               this.swipe.removeEventListener('click', (ev) => {
               if (ev.target === ev.currentTarget) this.close();
@@ -646,13 +649,13 @@
           window.addEventListener('resize', () => this.initStart());
         }
         startFn(ev) {
-          if (screen.availWidth <= this.screenWidth) {
+          if (window.innerWidth <= this.screenWidth) {
             this.prevcx = ev.touches[0].clientX;
             this.touchType = 'start';
           }
         }
         moveFn(ev) {
-          if (screen.availWidth <= this.screenWidth) {
+          if (window.innerWidth <= this.screenWidth) {
             this._navtransition_(false);
             let cx = ev.touches[0].clientX;
             let toTranslate = this.endTranslate + cx - this.prevcx;
@@ -666,7 +669,7 @@
           }
         }
         endFn() {
-          if (screen.availWidth <= this.screenWidth) {
+          if (window.innerWidth <= this.screenWidth) {
             if (this.touchType === 'move') {
     (this.beforeEndTranslate / this.swipe.offsetWidth) * 100 > 40
                 ? this.close()
@@ -678,7 +681,7 @@
         }
       
         setTransform() {
-          if (screen.availWidth <= this.screenWidth) {
+          if (window.innerWidth <= this.screenWidth) {
             this.swipe.firstElementChild.style.transform = `translate(${
           this.endTranslate + 'px'
         })`;
@@ -690,7 +693,7 @@
           }
         }
         open() {
-          if (screen.availWidth <= this.screenWidth) {
+          if (window.innerWidth <= this.screenWidth) {
             this.swipe.style.display = 'flex';
             this.swipe.style.justifyContent = this.right?"flex-end":'';
             setTimeout(() => {
@@ -702,7 +705,7 @@
           }
         }
         close() {
-          if (screen.availWidth <= this.screenWidth) {
+          if (window.innerWidth <= this.screenWidth) {
             const width = (this.right?1:-1)*this.swipe.offsetWidth;
             this.endTranslate = width;
             this.opened = false;

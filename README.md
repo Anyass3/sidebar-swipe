@@ -12,10 +12,10 @@
 Add the script to your file
 ```html
 compiled with babel for browser compatibility
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.0/dist/lib/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.6/dist/lib/index.min.js"></script>
 
 or may only be compatible for modern browsers.
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.0/dist/lib/mb.index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.7.6/dist/lib/mb.index.min.js"></script>
 ```
 
 ### option 2: using npm
@@ -76,4 +76,5 @@ example
 ```
 
 Note: **swipe** is the _swipe_ variable declared with const above.
-You might atleast consider changing the maxScreenWidth for which the side bar should apply to match yyour use case 
+
+You might atleast consider changing the maxScreenWidth for which the side bar should apply to match your use case 

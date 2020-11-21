@@ -50,12 +50,13 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function initStart() {
       var _this = this;
 
-      if (screen.availWidth <= this.screenWidth) {
+      if (window.innerWidth <= this.screenWidth) {
         this.swipe.style.width = '100%';
         this.swipe.style.position = 'fixed';
         this.swipe.style.height = '100vh';
         this.swipe.style.transition = 'background .5s ease';
         this.swipe.style.background = 'rgba(0,0,0,0)';
+        this.swipe.style.display = 'none';
         this.swipe.firstElementChild.style.width = this.width;
         this.swipe.addEventListener('click', function (ev) {
           if (ev.target === ev.currentTarget) _this.close();
@@ -74,6 +75,8 @@ var SideBarSwipe = /*#__PURE__*/function () {
         this.swipe.style.transition = '';
         this.swipe.style.width = '';
         this.swipe.style.background = '';
+        this.swipe.style.display = '';
+        this.swipe.style.justifyContent = '';
         this.swipe.firstElementChild.style.width = '';
         this.swipe.removeEventListener('click', function (ev) {
           if (ev.target === ev.currentTarget) _this.close();
@@ -106,7 +109,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "startFn",
     value: function startFn(ev) {
-      if (screen.availWidth <= this.screenWidth) {
+      if (window.innerWidth <= this.screenWidth) {
         this.prevcx = ev.touches[0].clientX;
         this.touchType = 'start';
       }
@@ -114,7 +117,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "moveFn",
     value: function moveFn(ev) {
-      if (screen.availWidth <= this.screenWidth) {
+      if (window.innerWidth <= this.screenWidth) {
         this._navtransition_(false);
 
         var cx = ev.touches[0].clientX;
@@ -132,7 +135,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "endFn",
     value: function endFn() {
-      if (screen.availWidth <= this.screenWidth) {
+      if (window.innerWidth <= this.screenWidth) {
         if (this.touchType === 'move') {
           ;
           this.beforeEndTranslate / this.swipe.offsetWidth * 100 > 40 ? this.close() : this.open();
@@ -145,7 +148,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "setTransform",
     value: function setTransform() {
-      if (screen.availWidth <= this.screenWidth) {
+      if (window.innerWidth <= this.screenWidth) {
         this.swipe.firstElementChild.style.transform = "translate(".concat(this.endTranslate + 'px', ")");
         var opacity = this.opacity - this.beforeEndTranslate / this.swipe.firstElementChild.offsetWidth * this.opacity; // adjusts side opacity based on beforeEndTranslate(current translate value)
 
@@ -157,7 +160,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function open() {
       var _this3 = this;
 
-      if (screen.availWidth <= this.screenWidth) {
+      if (window.innerWidth <= this.screenWidth) {
         this.swipe.style.display = 'flex';
         this.swipe.style.justifyContent = this.right ? "flex-end" : '';
         setTimeout(function () {
@@ -175,7 +178,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function close() {
       var _this4 = this;
 
-      if (screen.availWidth <= this.screenWidth) {
+      if (window.innerWidth <= this.screenWidth) {
         var width = (this.right ? 1 : -1) * this.swipe.offsetWidth;
         this.endTranslate = width;
         this.opened = false;
