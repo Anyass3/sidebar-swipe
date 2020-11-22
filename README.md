@@ -9,10 +9,10 @@ Add the script to your file
 **This is for normal usage below**
 ```html
 <!-- compiled with babel for browser compatibility -->
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/lib/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.2/dist/lib/index.min.js"></script>
 <!-- or -->
 <!--  may only be compatible for modern browsers. -->
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/lib/mb.index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.2/dist/lib/mb.index.min.js"></script>
 ```
 
 ### option 2: using npm

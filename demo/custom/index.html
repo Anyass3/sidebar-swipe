@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Element</title>
 </head>
+<style>
+  body{
+    margin:0;
+    padding:0;
+    }
+
+    /*this max-screen-width in which the sidebar applies
+    if no sidebar is NOT applied we will hide the buttons
+    */
+    @media(min-width: 900px){
+        button{
+            display:none !important;
+        }
+    }
+</style>
 <body>
     <p>
         NOTE: swipe will work for only touch devices
@@ -50,8 +65,8 @@
 
 
 <!-- these scripts will be executed for browsers that DON'T support modules -->
-<script nomodule src="../../dist/customElement/index.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/customElement/index.min.js"></script> -->
+<!-- <script nomodule src="../../dist/customElement/index.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.1/dist/customElement/index.min.js"></script>
 <script nomodule>
   let sidebar;
   document.addEventListener("DOMContentLoaded",()=>sidebar=SidebarSwipe.getSidebar())
@@ -72,7 +87,7 @@
 <script type="module">
     
   //import {SideBarSwipe, getSidebar} from '../../dist/customElement/index.mjs';
-  import {SideBarSwipe, getSidebar} from 'https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/customElement/index.min.mjs';
+  import {SideBarSwipe, getSidebar} from 'https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.1/dist/customElement/index.min.mjs';
   
   let sidebar;
   document.addEventListener("DOMContentLoaded",()=>sidebar=getSidebar())

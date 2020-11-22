@@ -55,6 +55,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
       var _this = this;
 
       if (window.innerWidth <= this.screenWidth) {
+        this.applied = true;
         this.swipe.style.width = '100%';
         this.swipe.style.position = 'fixed';
         this.swipe.style.height = '100vh';
@@ -74,6 +75,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
         this.setTransform();
       } else {
         //will reset styles if current screen availWidth > maxScreenWidth spacified
+        this.applied = false;
         this.swipe.style.position = '';
         this.swipe.style.height = '';
         this.swipe.style.transition = '';
@@ -113,7 +115,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "startFn",
     value: function startFn(ev) {
-      if (window.innerWidth <= this.screenWidth) {
+      if (this.applied) {
         this.prevcx = ev.touches[0].clientX;
         this.touchType = 'start';
       }
@@ -121,7 +123,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "moveFn",
     value: function moveFn(ev) {
-      if (window.innerWidth <= this.screenWidth) {
+      if (this.applied) {
         this._navtransition_(false);
 
         var cx = ev.touches[0].clientX;
@@ -139,7 +141,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "endFn",
     value: function endFn() {
-      if (window.innerWidth <= this.screenWidth) {
+      if (this.applied) {
         if (this.touchType === 'move') {
           ;
           this.beforeEndTranslate / this.swipe.offsetWidth * 100 > 40 ? this.close() : this.open();
@@ -152,7 +154,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "setTransform",
     value: function setTransform() {
-      if (window.innerWidth <= this.screenWidth) {
+      if (this.applied) {
         this.swipe.firstElementChild.style.transform = "translate(".concat(this.endTranslate + 'px', ")");
         var opacity = this.opacity - this.beforeEndTranslate / this.swipe.firstElementChild.offsetWidth * this.opacity; // adjusts side opacity based on beforeEndTranslate(current translate value)
 
@@ -164,7 +166,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function open() {
       var _this3 = this;
 
-      if (window.innerWidth <= this.screenWidth) {
+      if (this.applied) {
         this.swipe.style.display = 'flex';
         this.swipe.style.justifyContent = this.right ? "flex-end" : '';
         setTimeout(function () {
@@ -182,7 +184,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function close() {
       var _this4 = this;
 
-      if (window.innerWidth <= this.screenWidth) {
+      if (this.applied) {
         var width = (this.right ? 1 : -1) * this.swipe.offsetWidth;
         this.endTranslate = width;
         this.opened = false;

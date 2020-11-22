@@ -20,7 +20,10 @@
         margin:0;
         padding:0;
         }
-        
+
+        /*this max-screen-width in which the sidebar applies
+        if no sidebar is NOT applied we will hide the buttons
+        */
         @media(min-width: 900px){
             button{
                 display:none !important;
@@ -78,8 +81,8 @@
         </button>
     </div>
     <!-- <script src="../src/index.js"></script> -->
-    <script src="../dist/lib/index.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/lib/index.min.js"></script> -->
+    <!-- <script src="../dist/lib/index.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.1/dist/lib/index.min.js"></script>
     <script>
         let swiper=new SideBarSwipe("#swiper",{sideOpacity:0.1,transitionTimingFunc:'ease-in-out',maxScreenWidth:900})
         let swipel=new SideBarSwipe("#swipel",{sideOpacity:0.1,maxScreenWidth:900})

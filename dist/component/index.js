@@ -365,6 +365,7 @@
         // methods
         initStart() {
           if (window.innerWidth <= this.screenWidth) {
+            this.applied=true;
             this.swipe.style.width = '100%';
             this.swipe.style.position = 'fixed';
             this.swipe.style.height = '100vh';
@@ -382,16 +383,17 @@
             this.setTransform();
           } else {
             //will reset styles if current screen availWidth > maxScreenWidth spacified
-              this.swipe.style.position = '';
-              this.swipe.style.height = '';
-              this.swipe.style.transition = '';
-              this.swipe.style.width = '';
-              this.swipe.style.background = '';
-              this.swipe.style.display = '';
-              this.swipe.style.justifyContent='';
-              this.swipe.firstElementChild.style.width='';
-              this.swipe.removeEventListener('click', (ev) => {
-              if (ev.target === ev.currentTarget) this.close();
+            this.applied=false;  
+            this.swipe.style.position = '';
+            this.swipe.style.height = '';
+            this.swipe.style.transition = '';
+            this.swipe.style.width = '';
+            this.swipe.style.background = '';
+            this.swipe.style.display = '';
+            this.swipe.style.justifyContent='';
+            this.swipe.firstElementChild.style.width='';
+            this.swipe.removeEventListener('click', (ev) => {
+            if (ev.target === ev.currentTarget) this.close();
             });
       
             this._navtransition_(false);
@@ -406,13 +408,13 @@
           window.addEventListener('resize', () => this.initStart());
         }
         startFn(ev) {
-          if (window.innerWidth <= this.screenWidth) {
+          if (this.applied) {
             this.prevcx = ev.touches[0].clientX;
             this.touchType = 'start';
           }
         }
         moveFn(ev) {
-          if (window.innerWidth <= this.screenWidth) {
+          if (this.applied) {
             this._navtransition_(false);
             let cx = ev.touches[0].clientX;
             let toTranslate = this.endTranslate + cx - this.prevcx;
@@ -426,7 +428,7 @@
           }
         }
         endFn() {
-          if (window.innerWidth <= this.screenWidth) {
+          if (this.applied) {
             if (this.touchType === 'move') {
     (this.beforeEndTranslate / this.swipe.offsetWidth) * 100 > 40
                 ? this.close()
@@ -438,7 +440,7 @@
         }
       
         setTransform() {
-          if (window.innerWidth <= this.screenWidth) {
+          if (this.applied) {
             this.swipe.firstElementChild.style.transform = `translate(${
           this.endTranslate + 'px'
         })`;
@@ -450,7 +452,7 @@
           }
         }
         open() {
-          if (window.innerWidth <= this.screenWidth) {
+          if (this.applied) {
             this.swipe.style.display = 'flex';
             this.swipe.style.justifyContent = this.right?"flex-end":'';
             setTimeout(() => {
@@ -462,7 +464,7 @@
           }
         }
         close() {
-          if (window.innerWidth <= this.screenWidth) {
+          if (this.applied) {
             const width = (this.right?1:-1)*this.swipe.offsetWidth;
             this.endTranslate = width;
             this.opened = false;
