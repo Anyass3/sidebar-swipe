@@ -1,6 +1,6 @@
 {
   "name": "sidebar-swipe",
-  "version": "0.7.6",
+  "version": "0.8.0",
   "description": "This is a swipable sidebar nav",
   "svelte": "src/svelte/index.js",
   "jsdelivr": "dist/lib/index.min.js",
@@ -9,7 +9,7 @@
   "custom_module": "dist/customElement/index.mjs",
   "custom_main": "dist/customElement/index.js",
   "scripts": {
-    "build": "chmod +x .build && ./.build && rollup -c",
+    "build": "chmod +x .build && ./.build",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -26,6 +26,11 @@
     "url": "git+https://github.com/Anyass3/sidebar-swipe.git"
   },
   "author": "Abdoulie Nyass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anyass3/sidebar-swipe/issues"
+  },
+  "homepage": "https://github.com/Anyass3/sidebar-swipe#readme",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^9.0.0",
     "rollup": "^2.0.0",

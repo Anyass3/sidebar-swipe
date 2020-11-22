@@ -8,7 +8,8 @@ class SideBarSwipe {
         transitionTimingFunc='ease'
       } = {},
     ) {
-      this.swipe = document.querySelector(query);
+      const shadow=Array.from(document.querySelectorAll("sidebar-swipe")).filter((e)=>e.shadowRoot&&e.shadowRoot.querySelector(query))
+      this.swipe = !shadow?document.querySelector(query):shadow[0].shadowRoot.firstElementChild;
       this.swipe.style.display = 'none';
       // styles
       this.duration=transitionDuration;
@@ -27,7 +28,7 @@ class SideBarSwipe {
       this.initEvents();
     }
     get right(){
-      return this.swipe.hasAttribute('right')&&(this.swipe.getAttribute('right')!=='false');
+      return this.swipe.hasAttribute('right')&&!(this.swipe.getAttribute('right')==='false'||this.swipe.getAttribute('right')===false);
     }
     set right(val){
       this.swipe.setAttribute('right',val);
@@ -78,9 +79,9 @@ class SideBarSwipe {
     }
     initEvents() {
       // will instantiate the following events
-      this.swipe.addEventListener('touchstart', (ev) => this.startFn(ev))
-      this.swipe.addEventListener('touchmove', (ev) => this.moveFn(ev))
-      this.swipe.addEventListener('touchend', (ev) => this.endFn(ev))
+      this.swipe.firstElementChild.addEventListener('touchstart', (ev) => this.startFn(ev))
+      this.swipe.firstElementChild.addEventListener('touchmove', (ev) => this.moveFn(ev))
+      this.swipe.firstElementChild.addEventListener('touchend', (ev) => this.endFn(ev))
       window.addEventListener('resize', () => this.initStart())
     }
     startFn(ev) {

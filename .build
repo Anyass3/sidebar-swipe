@@ -12,8 +12,14 @@ echo "Minified dist/lib/index.js to dist/lib/index.min.js"
 
 
 terser -c -m -- temp.js > dist/lib/mb.index.min.js
-echo "Minified src/index.js to dist/lib/mb.index.min.js"
+echo "Minified src/index.js as dist/lib/mb.index.min.js"
 
 
 rm temp.js
 echo "removed temp.js"
+
+rollup -c
+
+terser dist/customElement/index.js > dist/customElement/index.min.js
+terser dist/customElement/index.mjs > dist/customElement/index.min.mjs
+echo "Minified dist/customElement"

@@ -1,4 +1,5 @@
 import SideBarSwipe from './SideBarSwipe.svelte';
-import swipe from "./swipe.js"
+import instance from "./instance";
 
-export { SideBarSwipe, swipe as sidebarswipe }
+const getSidebar=(e)=>instance.get(e)
+export { SideBarSwipe, getSidebar }

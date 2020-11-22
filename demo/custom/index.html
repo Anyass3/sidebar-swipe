@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Element</title>
+</head>
+<body>
+    <p>
+        NOTE: swipe will work for only touch devices
+    </p>
+    <!-- below is sidebar component with default props
+    excluding the style property -->
+    
+    <sidebar-swipe 
+    width=80
+    sideOpacity="0.2"
+    maxScreenWidth=768
+    transitionDuration=300
+    transitionTimingFunc=ease
+                                
+    style="background:lightblue">
+    <h2>minimize screen to see effect</h2>
+        <p>my sideBar</p>
+      <ul>
+          <li>Menu Item 1</li>
+          <li>Menu Item 2</li>
+          <li>Menu Item 3</li>
+          <li>Menu Item 4</li>
+      </ul>
+    </sidebar-swipe>
+    
+    <div style="justify-content:space-around;display: flex;">
+      <button id="right" >
+        <svg viewBox="0 0 24 24" width="2em" height="2em" fill="currentColor">
+          <path
+            d="M3.444 5.422a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444z"
+            fill-rule="evenodd" />
+        </svg>
+    </button>
+    <button id="left" >
+        <svg viewBox="0 0 24 24" width="2em" height="2em" fill="currentColor">
+            <path
+              d="M3.444 5.422a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444zm0 7.111a.733.733 0 110-1.466h17.047a.733.733 0 110 1.466H3.444z"
+              fill-rule="evenodd" />
+        </svg>
+    </button>
+    </div>
+
+
+
+<!-- these scripts will be executed for browsers that DON'T support modules -->
+<!-- <script nomodule src="../../dist/customElement/index.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/customElement/index.min.js"></script>
+<script nomodule>
+  let sidebar;
+  document.addEventListener("DOMContentLoaded",()=>sidebar=SidebarSwipe.getSidebar())
+
+  document.querySelector("#right").addEventListener("click",()=>{
+    sidebar.right=true
+    sidebar.open()
+  })
+  document.querySelector("#left").addEventListener("click",()=>{
+    sidebar.right=false
+    sidebar.open()
+  })
+</script>
+
+
+
+<!-- this script will be executed for browsers that support modules -->
+<script type="module">
+    
+  // import {SideBarSwipe, sidebarswipe} from '../../dist/customElement/index.mjs';
+  import {SideBarSwipe, getSidebar} from 'https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/customElement/index.min.mjs';
+  
+  let sidebar;
+  document.addEventListener("DOMContentLoaded",()=>sidebar=getSidebar())
+
+  // It is important to declare the 'click' here 
+  //because the the DOM cannot talk to module scrips
+  //but mudule scripts can talk to the DOM
+  document.querySelector("#right").addEventListener("click",()=>{
+    sidebar.right=true
+    sidebar.open()
+    console.log('right',sidebar.right)
+  })
+  document.querySelector("#left").addEventListener("click",()=>{
+    sidebar.right=false
+    sidebar.open()
+    console.log('left',sidebar.right)
+  })
+
+
+  //NOTE: getSidebar takes one arg 'id' which is the id of the custom element
+  // but if no id was spacified you should call getSidebar without an argument
+  // BUT if one wishes to have more one instances of the custom element
+  // then one must spacify an id for each instance of the sidebar-swipe element
+  // and get it's instance with getSidebar(id).
+</script>
+</body>
+</html>

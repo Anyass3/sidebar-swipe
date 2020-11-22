@@ -20,7 +20,10 @@ var SideBarSwipe = /*#__PURE__*/function () {
 
     _classCallCheck(this, SideBarSwipe);
 
-    this.swipe = document.querySelector(query);
+    var shadow = Array.from(document.querySelectorAll("sidebar-swipe")).filter(function (e) {
+      return e.shadowRoot && e.shadowRoot.querySelector(query);
+    });
+    this.swipe = !shadow ? document.querySelector(query) : shadow[0].shadowRoot.firstElementChild;
     this.swipe.style.display = 'none'; // styles
 
     this.duration = transitionDuration;
@@ -93,13 +96,13 @@ var SideBarSwipe = /*#__PURE__*/function () {
       var _this2 = this;
 
       // will instantiate the following events
-      this.swipe.addEventListener('touchstart', function (ev) {
+      this.swipe.firstElementChild.addEventListener('touchstart', function (ev) {
         return _this2.startFn(ev);
       });
-      this.swipe.addEventListener('touchmove', function (ev) {
+      this.swipe.firstElementChild.addEventListener('touchmove', function (ev) {
         return _this2.moveFn(ev);
       });
-      this.swipe.addEventListener('touchend', function (ev) {
+      this.swipe.firstElementChild.addEventListener('touchend', function (ev) {
         return _this2.endFn(ev);
       });
       window.addEventListener('resize', function () {
@@ -198,7 +201,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "right",
     get: function get() {
-      return this.swipe.hasAttribute('right') && this.swipe.getAttribute('right') !== 'false';
+      return this.swipe.hasAttribute('right') && !(this.swipe.getAttribute('right') === 'false' || this.swipe.getAttribute('right') === false);
     },
     set: function set(val) {
       this.swipe.setAttribute('right', val);
