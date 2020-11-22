@@ -40,13 +40,15 @@ class SideBarSwipe {
       const w=this.swipe.firstElementChild.getAttribute('width')
       return !w?"80%":(/^[0-9]+$/.test(`${w}`)?w+'%':w)
     }
+    get applied(){
+      return window.innerWidth <= this.screenWidth
+    }
     _navtransition_(val=true){
       this.swipe.firstElementChild.style.transition = val?`transform ${this.duration}ms ${this.timingFn}`:'';
     }
     // methods
     initStart() {
-      if (window.innerWidth <= this.screenWidth) {
-        this.applied=true;
+      if (this.applied) {
         this.swipe.style.width = '100%';
         this.swipe.style.position = 'fixed';
         this.swipe.style.height = '100vh';
@@ -64,7 +66,7 @@ class SideBarSwipe {
         this.setTransform()
       } else {
         //will reset styles if current screen availWidth > maxScreenWidth spacified
-        this.applied=false;  
+        
         this.swipe.style.position = '';
         this.swipe.style.height = '';
         this.swipe.style.transition = '';

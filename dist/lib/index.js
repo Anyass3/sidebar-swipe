@@ -54,8 +54,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function initStart() {
       var _this = this;
 
-      if (window.innerWidth <= this.screenWidth) {
-        this.applied = true;
+      if (this.applied) {
         this.swipe.style.width = '100%';
         this.swipe.style.position = 'fixed';
         this.swipe.style.height = '100vh';
@@ -75,7 +74,6 @@ var SideBarSwipe = /*#__PURE__*/function () {
         this.setTransform();
       } else {
         //will reset styles if current screen availWidth > maxScreenWidth spacified
-        this.applied = false;
         this.swipe.style.position = '';
         this.swipe.style.height = '';
         this.swipe.style.transition = '';
@@ -215,6 +213,11 @@ var SideBarSwipe = /*#__PURE__*/function () {
     get: function get() {
       var w = this.swipe.firstElementChild.getAttribute('width');
       return !w ? "80%" : /^[0-9]+$/.test("".concat(w)) ? w + '%' : w;
+    }
+  }, {
+    key: "applied",
+    get: function get() {
+      return window.innerWidth <= this.screenWidth;
     }
   }]);
 

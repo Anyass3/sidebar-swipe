@@ -14,7 +14,7 @@
     /*this max-screen-width in which the sidebar applies
     if no sidebar is NOT applied we will hide the buttons
     */
-    @media(min-width: 900px){
+    @media(min-width: 768px){
         button{
             display:none !important;
         }
@@ -66,7 +66,7 @@
 
 <!-- these scripts will be executed for browsers that DON'T support modules -->
 <!-- <script nomodule src="../../dist/customElement/index.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.1/dist/customElement/index.min.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.3/dist/customElement/index.min.js"></script>
 <script nomodule>
   let sidebar;
   document.addEventListener("DOMContentLoaded",()=>sidebar=SidebarSwipe.getSidebar())
