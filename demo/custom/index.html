@@ -50,8 +50,8 @@
 
 
 <!-- these scripts will be executed for browsers that DON'T support modules -->
-<!-- <script nomodule src="../../dist/customElement/index.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/customElement/index.min.js"></script>
+<script nomodule src="../../dist/customElement/index.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/customElement/index.min.js"></script> -->
 <script nomodule>
   let sidebar;
   document.addEventListener("DOMContentLoaded",()=>sidebar=SidebarSwipe.getSidebar())
@@ -71,7 +71,7 @@
 <!-- this script will be executed for browsers that support modules -->
 <script type="module">
     
-  // import {SideBarSwipe, sidebarswipe} from '../../dist/customElement/index.mjs';
+  //import {SideBarSwipe, getSidebar} from '../../dist/customElement/index.mjs';
   import {SideBarSwipe, getSidebar} from 'https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.0/dist/customElement/index.min.mjs';
   
   let sidebar;
@@ -83,12 +83,10 @@
   document.querySelector("#right").addEventListener("click",()=>{
     sidebar.right=true
     sidebar.open()
-    console.log('right',sidebar.right)
   })
   document.querySelector("#left").addEventListener("click",()=>{
     sidebar.right=false
     sidebar.open()
-    console.log('left',sidebar.right)
   })
 
 

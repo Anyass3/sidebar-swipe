@@ -23,7 +23,8 @@ var SideBarSwipe = /*#__PURE__*/function () {
     var shadow = Array.from(document.querySelectorAll("sidebar-swipe")).filter(function (e) {
       return e.shadowRoot && e.shadowRoot.querySelector(query);
     });
-    this.swipe = !shadow ? document.querySelector(query) : shadow[0].shadowRoot.firstElementChild;
+    console.log(shadow);
+    this.swipe = shadow.length > 0 ? shadow[0].shadowRoot.firstElementChild : document.querySelector(query);
     this.swipe.style.display = 'none'; // styles
 
     this.duration = transitionDuration;
