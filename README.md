@@ -1,5 +1,5 @@
-## This is a vanilla Javascript Sidebar Swipeable for touch screen devices
-## Also made for **svelte**
+## This is a Sidebar Swipeable ideally for touch screen devices
+
 [link to demo](https://sidebar-swipe.netlify.app/demo/)
 
 
