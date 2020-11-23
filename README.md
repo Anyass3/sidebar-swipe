@@ -1,4 +1,4 @@
-## This is a Sidebar Swipeable ideally for touch screen devices
+###### This is a Sidebar Swipeable ideally for touch screen devices
 
 [link to demo](https://sidebar-swipe.netlify.app/demo/)
 
