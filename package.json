@@ -1,6 +1,6 @@
 {
   "name": "sidebar-swipe",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "This is a swipable sidebar nav",
   "svelte": "src/svelte/index.js",
   "jsdelivr": "dist/lib/index.min.js",
@@ -32,16 +32,16 @@
   },
   "homepage": "https://github.com/Anyass3/sidebar-swipe#readme",
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^9.0.0",
-    "rollup": "^2.0.0",
-    "rollup-plugin-svelte": "^6.0.0",
-    "svelte": "^3.0.0",
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.12.1"
+    "@babel/preset-env": "^7.12.1",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "rollup": "^2.0.0",
+    "rollup-plugin-svelte": "^6.0.0",
+    "svelte": "^3.0.0"
   },
   "files": [
     "src",

@@ -2,78 +2,93 @@
 
 [link to demo](https://sidebar-swipe.netlify.app/demo/)
 
-
 # Installation
+
 ### option 1: use the cdn
+
 Add the script to your file
 
 **This is for normal usage below**
+
 ```html
 <!-- compiled with babel for browser compatibility -->
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.3/dist/lib/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.4/dist/lib/index.min.js"></script>
 <!-- or -->
 <!--  may only be compatible for modern browsers. -->
-<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.3/dist/lib/mb.index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sidebar-swipe@0.8.4/dist/lib/mb.index.min.js"></script>
 ```
 
 ### option 2: using npm
+
 ```shell
 npm install sidebar-swipe
 ```
+
 then in your file
+
 ```javascript
-import SideBarSwipe from 'sidebar-swipe'
+import SideBarSwipe from 'sidebar-swipe';
 ```
+
 # Usage
 
 ### FOR SVELTE
+
 check the example in the svelte repl demo on how to use the svelte component.
 
 the svelte component sample with defaults
+
 ```svelte
 <SideBarSwipe
     width='80'
-    sideOpacity="0.2" 
+    sideOpacity="0.2"
     maxScreenWidth='768'
     transitionDuration='300'
-    transitionTimingFunc='ease'
+    transitionTimingFunc='cubic-bezier(0.9, 0.28, 0.08, 1.13)'
     right={false}
     >
 
 </SideBarSwipe>
 ```
+
     Because for svelte it's a component not just a lib.
+
 [demo for svelte](https://svelte.dev/repl/474bd480f1864a2a8e0de961ba5226e7?version=3.29.7)
+
 ### As Custom Elememt
+
 To use as custom element check the code or files "demo/custom" to see the example
 
 the custom element sample with defaults
+
 ```html
 <sidebar-swipe
-    width=80
-    sideOpacity="0.2"
-    maxScreenWidth=768
-    transitionDuration=300
-    transitionTimingFunc=ease
-    right=false
+  width="80"
+  sideOpacity="0.2"
+  maxScreenWidth="768"
+  transitionDuration="300"
+  transitionTimingFunc="cubic-bezier(0.9, 0.28, 0.08, 1.13)"
+  right="false"
 >
-    
 </sidebar-swipe>
 ```
+
 [link to custom Elememt demo](https://sidebar-swipe.netlify.app/demo/custom)
 
-
 ### normal usage
+
 defaults: sidebar left: don't add the right attribute or add right=false attribute
 
 for sidebar right:- add a right or right=true attribute to the side-bar element
+
 ```html
-<div id="side-bar" style="display: none" right=false>
-    <nav width=76>
-        <slot></slot>
-    </nav>
+<div id="side-bar" style="display: none" right="false">
+  <nav width="76">
+    <slot></slot>
+  </nav>
 </div>
 ```
+
 **NOTE:**
 
 the "style='display: none'" is recommeded
@@ -82,32 +97,38 @@ you can use any other html tags instead of nav example div
 
 ```html
 <script>
-"these are the default options"
-const options = {sideOpacity:0.2,transitionDuration: 300,maxScreenWidth:786,transitionTimingFunc:'ease'}
+  'these are the default options';
+  const options = {
+    sideOpacity: 0.2,
+    transitionDuration: 300,
+    maxScreenWidth: 786,
+    transitionTimingFunc: 'cubic-bezier(0.9, 0.28, 0.08, 1.13)',
+  };
 
-const swipe=new SideBarSwipe(selector,options)
+  const swipe = new SideBarSwipe(selector, options);
 
-'example'
-new SideBarSwipe('#side-bar',options)
+  ('example');
+  new SideBarSwipe('#side-bar', options);
 </script>
 ```
 
 ### opening and closing the sidebar
+
 ```javascript
-swipe.open() // to open the sidebar
-swipe.close() // to close the sidebar
-swipe.toggle() //to toggle the open and close 
+swipe.open(); // to open the sidebar
+swipe.close(); // to close the sidebar
+swipe.toggle(); //to toggle the open and close
 ```
+
 example
+
 ```html
-<button onclick="swipe.open()"><button>
+<button onclick="swipe.open()"><button></button></button>
 ```
 
 Note: **swipe** is the _swipe_ variable declared with const above.
 
-You might atleast consider changing the maxScreenWidth for which the side bar should apply to match your use case 
-
-
+You might atleast consider changing the maxScreenWidth for which the side bar should apply to match your use case
 
 **NOTE:**
 width is in percentage(%):- it is the width of the sidebar :: defaults 80

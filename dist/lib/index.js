@@ -16,14 +16,13 @@ var SideBarSwipe = /*#__PURE__*/function () {
         _ref$maxScreenWidth = _ref.maxScreenWidth,
         maxScreenWidth = _ref$maxScreenWidth === void 0 ? 768 : _ref$maxScreenWidth,
         _ref$transitionTiming = _ref.transitionTimingFunc,
-        transitionTimingFunc = _ref$transitionTiming === void 0 ? 'ease' : _ref$transitionTiming;
+        transitionTimingFunc = _ref$transitionTiming === void 0 ? 'cubic-bezier(0.9, 0.28, 0.08, 1.13)' : _ref$transitionTiming;
 
     _classCallCheck(this, SideBarSwipe);
 
-    var shadow = Array.from(document.querySelectorAll("sidebar-swipe")).filter(function (e) {
+    var shadow = Array.from(document.querySelectorAll('sidebar-swipe')).filter(function (e) {
       return e.shadowRoot && e.shadowRoot.querySelector(query);
     });
-    console.log(shadow);
     this.swipe = shadow.length > 0 ? shadow[0].shadowRoot.firstElementChild : document.querySelector(query);
     this.swipe.style.display = 'none'; // styles
 
@@ -32,7 +31,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     this.screenWidth = maxScreenWidth; //the max screen width in which the sidebar applies
 
     this.endTranslate = 0;
-    this.beforeEndTranslate = 0; //should be abs & represents current translation value 
+    this.beforeEndTranslate = 0; //should be abs & represents current translation value
 
     this.opened = true;
     this.prevcx = 0; // previous clientX useful for touchmove
@@ -57,7 +56,9 @@ var SideBarSwipe = /*#__PURE__*/function () {
       if (this.applied) {
         this.swipe.style.width = '100%';
         this.swipe.style.position = 'fixed';
-        this.swipe.style.height = '100vh';
+        this.swipe.style.overflowY = 'overlay';
+        this.swipe.style.height = '100%';
+        this.swipe.firstElementChild.style.height = '100%';
         this.swipe.style.transition = 'background .5s ease';
         this.swipe.style.background = 'rgba(0,0,0,0)';
         this.swipe.style.display = 'none';
@@ -72,23 +73,39 @@ var SideBarSwipe = /*#__PURE__*/function () {
         this.endTranslate = (this.right ? 1 : -1) * document.body.offsetWidth;
         this.opened = false;
         this.setTransform();
+
+        if (!this.wasApplied) {
+          this.swipe.addEventListener('click', function (ev) {
+            if (ev.target === ev.currentTarget) _this.close();
+          });
+        }
+
+        this.wasApplied = true;
       } else {
         //will reset styles if current screen availWidth > maxScreenWidth spacified
         this.swipe.style.position = '';
+        this.swipe.style.overflowY = '';
         this.swipe.style.height = '';
+        this.swipe.firstElementChild.style.height = '';
         this.swipe.style.transition = '';
         this.swipe.style.width = '';
         this.swipe.style.background = '';
         this.swipe.style.display = '';
         this.swipe.style.justifyContent = '';
         this.swipe.firstElementChild.style.width = '';
-        this.swipe.removeEventListener('click', function (ev) {
-          if (ev.target === ev.currentTarget) _this.close();
-        });
 
         this._navtransition_(false);
 
         this.swipe.firstElementChild.style.transform = '';
+        this.initEvents(true);
+
+        if (!this.wasApplied) {
+          this.swipe.removeEventListener('click', function (ev) {
+            if (ev.target === ev.currentTarget) _this.close();
+          });
+        }
+
+        this.wasApplied = false;
       }
     }
   }, {
@@ -96,19 +113,20 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function initEvents() {
       var _this2 = this;
 
-      // will instantiate the following events
-      this.swipe.firstElementChild.addEventListener('touchstart', function (ev) {
+      var remove = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      // will instantiate the following touch events
+      this.swipe[remove ? 'removeEventListener' : 'addEventListener']('touchstart', function (ev) {
         return _this2.startFn(ev);
-      });
-      this.swipe.firstElementChild.addEventListener('touchmove', function (ev) {
+      }, false);
+      this.swipe[remove ? 'removeEventListener' : 'addEventListener']('touchmove', function (ev) {
         return _this2.moveFn(ev);
-      });
-      this.swipe.firstElementChild.addEventListener('touchend', function (ev) {
+      }, false);
+      this.swipe[remove ? 'removeEventListener' : 'addEventListener']('touchend', function (ev) {
         return _this2.endFn(ev);
-      });
-      window.addEventListener('resize', function () {
-        return _this2.initStart();
-      });
+      }, false);
+      this.swipe[remove ? 'removeEventListener' : 'addEventListener']('touchcancel', function (ev) {
+        return console.log(ev);
+      }, false);
     }
   }, {
     key: "startFn",
@@ -141,11 +159,10 @@ var SideBarSwipe = /*#__PURE__*/function () {
     value: function endFn() {
       if (this.applied) {
         if (this.touchType === 'move') {
-          ;
+          this._navtransition_();
+
           this.beforeEndTranslate / this.swipe.offsetWidth * 100 > 40 ? this.close() : this.open();
           this.touchType = 'end';
-
-          this._navtransition_();
         }
       }
     }
@@ -165,8 +182,8 @@ var SideBarSwipe = /*#__PURE__*/function () {
       var _this3 = this;
 
       if (this.applied) {
-        this.swipe.style.display = 'flex';
-        this.swipe.style.justifyContent = this.right ? "flex-end" : '';
+        this.swipe.style.display = 'block';
+        this.swipe.firstElementChild.style["float"] = this.right ? 'right' : 'left';
         setTimeout(function () {
           _this3.endTranslate = 0;
           _this3.opened = true;
@@ -174,7 +191,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
           _this3.setTransform();
 
           _this3.swipe.style.background = "rgba(0,0,0,".concat(_this3.opacity, ")");
-        }, 1);
+        }, 0.8);
       }
     }
   }, {
@@ -212,7 +229,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     key: "width",
     get: function get() {
       var w = this.swipe.firstElementChild.getAttribute('width');
-      return !w ? "80%" : /^[0-9]+$/.test("".concat(w)) ? w + '%' : w;
+      return !w ? '80%' : /^[0-9]+$/.test("".concat(w)) ? w + '%' : w;
     }
   }, {
     key: "applied",

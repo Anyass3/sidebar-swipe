@@ -1,7 +1,7 @@
 touch temp.js
 echo "Created temp.js"
 
-head -n -1 src/index.js > temp.js
+head -n -2 src/index.js > temp.js
 echo "Copied index.js to excluding the last line temp.js"
 
 babel temp.js --out-file dist/lib/index.js
