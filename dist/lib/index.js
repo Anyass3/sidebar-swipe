@@ -139,6 +139,8 @@ var SideBarSwipe = /*#__PURE__*/function () {
   }, {
     key: "moveFn",
     value: function moveFn(ev) {
+      ev.preventDefault();
+
       if (this.applied) {
         this._navtransition_(false);
 
@@ -156,7 +158,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     }
   }, {
     key: "endFn",
-    value: function endFn() {
+    value: function endFn(ev) {
       if (this.applied) {
         if (this.touchType === 'move') {
           this._navtransition_();

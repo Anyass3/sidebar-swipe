@@ -134,6 +134,7 @@ class SideBarSwipe {
     }
   }
   moveFn(ev) {
+    ev.preventDefault();
     if (this.applied) {
       this._navtransition_(false);
       let cx = ev.touches[0].clientX;
@@ -147,7 +148,7 @@ class SideBarSwipe {
       }
     }
   }
-  endFn() {
+  endFn(ev) {
     if (this.applied) {
       if (this.touchType === 'move') {
         this._navtransition_();
