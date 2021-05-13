@@ -23,7 +23,7 @@ class SideBarSwipe {
   constructor(
     query,
     {
-      sideOpacity = 0.2,
+      backdropOpacity = 0.2,
       transitionDuration = 300,
       maxScreenWidth = 768,
       transitionTimingFunc = 'cubic-bezier(0.9, 0.28, 0.08, 1.13)',
@@ -46,7 +46,7 @@ class SideBarSwipe {
     this.beforeEndTranslate = 0; //should be abs & represents current translation value
     this.opened = Writable(true);
     this.prevcx = 0; // previous clientX useful for touchmove
-    this.opacity = sideOpacity;
+    this.opacity = backdropOpacity;
 
     this.initStart();
 
