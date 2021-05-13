@@ -41,7 +41,7 @@ the svelte component sample with defaults
 ```svelte
 <SideBarSwipe
     width='80'
-    sideOpacity="0.2"
+    backdropOpacity="0.2"
     maxScreenWidth='768'
     transitionDuration='300'
     transitionTimingFunc='cubic-bezier(0.9, 0.28, 0.08, 1.13)'
