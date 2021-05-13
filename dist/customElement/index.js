@@ -289,6 +289,77 @@
         };
     }
 
+    const subscriber_queue = [];
+    /**
+     * Create a `Writable` store that allows both updating and reading by subscription.
+     * @param {*=}value initial value
+     * @param {StartStopNotifier=}start start and stop notifications for subscriptions
+     */
+    function writable(value, start = noop) {
+        let stop;
+        const subscribers = [];
+        function set(new_value) {
+            if (safe_not_equal(value, new_value)) {
+                value = new_value;
+                if (stop) { // store is ready
+                    const run_queue = !subscriber_queue.length;
+                    for (let i = 0; i < subscribers.length; i += 1) {
+                        const s = subscribers[i];
+                        s[1]();
+                        subscriber_queue.push(s, value);
+                    }
+                    if (run_queue) {
+                        for (let i = 0; i < subscriber_queue.length; i += 2) {
+                            subscriber_queue[i][0](subscriber_queue[i + 1]);
+                        }
+                        subscriber_queue.length = 0;
+                    }
+                }
+            }
+        }
+        function update(fn) {
+            set(fn(value));
+        }
+        function subscribe(run, invalidate = noop) {
+            const subscriber = [run, invalidate];
+            subscribers.push(subscriber);
+            if (subscribers.length === 1) {
+                stop = start(set) || noop;
+            }
+            run(value);
+            return () => {
+                const index = subscribers.indexOf(subscriber);
+                if (index !== -1) {
+                    subscribers.splice(index, 1);
+                }
+                if (subscribers.length === 0) {
+                    stop();
+                    stop = null;
+                }
+            };
+        }
+        return { set, update, subscribe };
+    }
+
+    const Writable = (value) => {
+      const { subscribe, ...methods } = writable(value);
+
+      const get = () => {
+        let value;
+        subscribe((val) => {
+          value = val;
+        })();
+
+        return value;
+      };
+
+      return {
+        subscribe,
+        ...methods,
+        get,
+      };
+    };
+
     class SideBarSwipe {
       constructor(
         query,
@@ -314,7 +385,7 @@
         //the max screen width in which the sidebar applies
         this.endTranslate = 0;
         this.beforeEndTranslate = 0; //should be abs & represents current translation value
-        this.opened = true;
+        this.opened = Writable(true);
         this.prevcx = 0; // previous clientX useful for touchmove
         this.opacity = sideOpacity;
 
@@ -351,7 +422,7 @@
           this.swipe.style.position = 'fixed';
           this.swipe.style.overflowY = 'overlay';
           this.swipe.style.height = '100%';
-          this.swipe.firstElementChild.style.height = '100%';
+          this.swipe.firstElementChild.style.minHeight = '100%';
           this.swipe.style.transition = 'background .5s ease';
           this.swipe.style.background = 'rgba(0,0,0,0)';
           this.swipe.style.display = 'none';
@@ -362,7 +433,7 @@
           this._navtransition_();
           // this.close()
           this.endTranslate = (this.right ? 1 : -1) * document.body.offsetWidth;
-          this.opened = false;
+          this.opened.set(false);
           this.setTransform();
           if (!this.wasApplied) {
             this.swipe.addEventListener('click', (ev) => {
@@ -376,7 +447,7 @@
           this.swipe.style.position = '';
           this.swipe.style.overflowY = '';
           this.swipe.style.height = '';
-          this.swipe.firstElementChild.style.height = '';
+          this.swipe.firstElementChild.style.minHeight = '';
           this.swipe.style.transition = '';
           this.swipe.style.width = '';
           this.swipe.style.background = '';
@@ -462,81 +533,34 @@
         if (this.applied) {
           this.swipe.style.display = 'block';
           this.swipe.firstElementChild.style.float = this.right ? 'right' : 'left';
+          this.swipe.firstElementChild.classList.add('sb-opened');
           setTimeout(() => {
             this.endTranslate = 0;
-            this.opened = true;
+            this.opened.set(true);
             this.setTransform();
             this.swipe.style.background = `rgba(0,0,0,${this.opacity})`;
           }, 0.8);
         }
       }
+
       close() {
         if (this.applied) {
           const width = (this.right ? 1 : -1) * this.swipe.offsetWidth;
           this.endTranslate = width;
-          this.opened = false;
+          this.opened.set(false);
           this.setTransform();
           this.swipe.style.background = `rgba(0,0,0,0)`;
-          setTimeout(() => (this.swipe.style.display = 'none'), this.duration);
+          setTimeout(() => {
+            this.swipe.style.display = 'none';
+            this.swipe.firstElementChild.classList.remove('sb-opened');
+          }, this.duration);
         }
       }
       toggle() {
-        if (this.opened) this.close();
+        if (this.opened.get()) this.close();
         else this.open();
       }
       // static methods
-    }
-
-    const subscriber_queue = [];
-    /**
-     * Create a `Writable` store that allows both updating and reading by subscription.
-     * @param {*=}value initial value
-     * @param {StartStopNotifier=}start start and stop notifications for subscriptions
-     */
-    function writable(value, start = noop) {
-        let stop;
-        const subscribers = [];
-        function set(new_value) {
-            if (safe_not_equal(value, new_value)) {
-                value = new_value;
-                if (stop) { // store is ready
-                    const run_queue = !subscriber_queue.length;
-                    for (let i = 0; i < subscribers.length; i += 1) {
-                        const s = subscribers[i];
-                        s[1]();
-                        subscriber_queue.push(s, value);
-                    }
-                    if (run_queue) {
-                        for (let i = 0; i < subscriber_queue.length; i += 2) {
-                            subscriber_queue[i][0](subscriber_queue[i + 1]);
-                        }
-                        subscriber_queue.length = 0;
-                    }
-                }
-            }
-        }
-        function update(fn) {
-            set(fn(value));
-        }
-        function subscribe(run, invalidate = noop) {
-            const subscriber = [run, invalidate];
-            subscribers.push(subscriber);
-            if (subscribers.length === 1) {
-                stop = start(set) || noop;
-            }
-            run(value);
-            return () => {
-                const index = subscribers.indexOf(subscriber);
-                if (index !== -1) {
-                    subscribers.splice(index, 1);
-                }
-                if (subscribers.length === 0) {
-                    stop();
-                    stop = null;
-                }
-            };
-        }
-        return { set, update, subscribe };
     }
 
     var instance = (()=>{

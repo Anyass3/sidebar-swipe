@@ -1,10 +1,36 @@
 "use strict";
 
+var _store = require("svelte/store");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+var Writable = function Writable(value) {
+  var _writable = (0, _store.writable)(value),
+      subscribe = _writable.subscribe,
+      methods = _objectWithoutProperties(_writable, ["subscribe"]);
+
+  var get = function get() {
+    var value;
+    subscribe(function (val) {
+      value = val;
+    })();
+    return value;
+  };
+
+  return Object.assign({
+    subscribe: subscribe
+  }, methods, {
+    get: get
+  });
+};
 
 var SideBarSwipe = /*#__PURE__*/function () {
   function SideBarSwipe(query) {
@@ -33,7 +59,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
     this.endTranslate = 0;
     this.beforeEndTranslate = 0; //should be abs & represents current translation value
 
-    this.opened = true;
+    this.opened = Writable(true);
     this.prevcx = 0; // previous clientX useful for touchmove
 
     this.opacity = sideOpacity;
@@ -58,7 +84,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
         this.swipe.style.position = 'fixed';
         this.swipe.style.overflowY = 'overlay';
         this.swipe.style.height = '100%';
-        this.swipe.firstElementChild.style.height = '100%';
+        this.swipe.firstElementChild.style.minHeight = '100%';
         this.swipe.style.transition = 'background .5s ease';
         this.swipe.style.background = 'rgba(0,0,0,0)';
         this.swipe.style.display = 'none';
@@ -71,7 +97,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
 
 
         this.endTranslate = (this.right ? 1 : -1) * document.body.offsetWidth;
-        this.opened = false;
+        this.opened.set(false);
         this.setTransform();
 
         if (!this.wasApplied) {
@@ -86,7 +112,7 @@ var SideBarSwipe = /*#__PURE__*/function () {
         this.swipe.style.position = '';
         this.swipe.style.overflowY = '';
         this.swipe.style.height = '';
-        this.swipe.firstElementChild.style.height = '';
+        this.swipe.firstElementChild.style.minHeight = '';
         this.swipe.style.transition = '';
         this.swipe.style.width = '';
         this.swipe.style.background = '';
@@ -186,9 +212,11 @@ var SideBarSwipe = /*#__PURE__*/function () {
       if (this.applied) {
         this.swipe.style.display = 'block';
         this.swipe.firstElementChild.style["float"] = this.right ? 'right' : 'left';
+        this.swipe.firstElementChild.classList.add('sb-opened');
         setTimeout(function () {
           _this3.endTranslate = 0;
-          _this3.opened = true;
+
+          _this3.opened.set(true);
 
           _this3.setTransform();
 
@@ -204,18 +232,20 @@ var SideBarSwipe = /*#__PURE__*/function () {
       if (this.applied) {
         var width = (this.right ? 1 : -1) * this.swipe.offsetWidth;
         this.endTranslate = width;
-        this.opened = false;
+        this.opened.set(false);
         this.setTransform();
         this.swipe.style.background = "rgba(0,0,0,0)";
         setTimeout(function () {
-          return _this4.swipe.style.display = 'none';
+          _this4.swipe.style.display = 'none';
+
+          _this4.swipe.firstElementChild.classList.remove('sb-opened');
         }, this.duration);
       }
     }
   }, {
     key: "toggle",
     value: function toggle() {
-      if (this.opened) this.close();else this.open();
+      if (this.opened.get()) this.close();else this.open();
     } // static methods
 
   }, {
