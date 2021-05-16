@@ -21,7 +21,7 @@
   let Class = $$props.class;
 </script>
 
-<div {id} use:sidebar={options}>
+<div {id} use:sidebar={options} class="sidebar-swipe-applied">
   <nav {style} class={!!Class ? Class : ''}>
     <slot />
   </nav>

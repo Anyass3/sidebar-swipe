@@ -18,6 +18,7 @@ const writable = (value) => {
     get,
   };
 };
+const browser = typeof window !== 'undefined';
 
 class Emitter {
   events = new Map();
@@ -43,7 +44,7 @@ const $ = new Emitter();
 
 export const opened = writable(false);
 
-export const applied = writable(false);
+export const applied = writable(true);
 
 export const open = () => $.emit('open');
 
@@ -66,6 +67,8 @@ export default (
     right = false,
   } = {}
 ) => {
+  applied.set(window.innerWidth <= maxScreenWidth);
+  if (!applied.get()) node.classList.remove('sidebar-swipe-applied');
   width = !width ? '80%' : /^[0-9]+$/.test(`${width}`) ? width + '%' : width;
   // node.style.display = 'none';
   //   setNode(node);
@@ -75,8 +78,8 @@ export default (
   let endTranslate = 0;
   let beforeEndTranslate = 0; //should be abs & represents current translation value
   let prevcx = 0; // previous clientX useful for touchmove
-
-  applied.set(window.innerWidth <= maxScreenWidth);
+  let wasApplied = false;
+  let touchType;
 
   const _navtransition_ = (val = true) => {
     node.firstElementChild.style.transition = val
@@ -180,6 +183,7 @@ export default (
   };
 
   const init = () => {
+    applied.set(window.innerWidth <= maxScreenWidth);
     if (applied.get()) {
       node.classList.add('sidebar-swipe-applied');
       initEvents();
@@ -194,7 +198,7 @@ export default (
       if (!wasApplied) {
         node.addEventListener('click', backdrop);
       }
-      let wasApplied = true;
+      wasApplied = true;
     } else {
       node.classList.remove('sidebar-swipe-applied');
       //will reset styles if current screen availWidth > maxScreenWidth spacified
@@ -206,15 +210,15 @@ export default (
       if (!wasApplied) {
         node.removeEventListener('click', backdrop);
       }
-      let wasApplied = false;
+      wasApplied = false;
     }
   };
 
   init();
-  window.addEventListener('resize', init);
+  window.onresize = init;
   return {
     destroy() {
-      window.addEventListener('resize', init);
+      window.removeEventListener('resize', init);
       node.removeEventListener('click', backdrop);
       initEvents(true);
       $.clear();

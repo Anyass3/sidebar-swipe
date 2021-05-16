@@ -20,6 +20,10 @@ echo "removed temp.js"
 
 rollup -c
 
+terser dist/component/index.js > dist/component/index.min.js
+terser dist/component/index.mjs > dist/component/index.min.mjs
+echo "Minified dist/component"
+
 terser dist/customElement/index.js > dist/customElement/index.min.js
 terser dist/customElement/index.mjs > dist/customElement/index.min.mjs
 echo "Minified dist/customElement"
