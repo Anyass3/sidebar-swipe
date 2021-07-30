@@ -1,6 +1,6 @@
 {
   "name": "sidebar-swipe",
-  "version": "0.8.82",
+  "version": "0.8.83",
   "description": "This is a swipable sidebar nav",
   "svelte": "src/svelte/index.js",
   "jsdelivr": "dist/lib/index.min.js",
@@ -41,7 +41,8 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "rollup": "^2.0.0",
     "rollup-plugin-svelte": "^6.0.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0",
+    "terser": "^5.7.1"
   },
   "files": [
     "src",
