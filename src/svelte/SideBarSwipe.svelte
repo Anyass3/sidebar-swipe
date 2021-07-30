@@ -10,6 +10,9 @@
   export let transitionDuration;
   export let transitionTimingFunc;
 
+  let cls = '';
+  export { cls as class };
+
   const options = {
     maxScreenWidth,
     transitionDuration,
@@ -18,29 +21,28 @@
     width,
     right,
   };
-  let Class = $$props.class;
 </script>
 
-<div {id} use:sidebar={options} class="sidebar-swipe-applied">
-  <nav {style} class={!!Class ? Class : ''}>
+<div {id} use:sidebar={options} class="sidebar-swipe-applied closed">
+  <nav {style} class={cls}>
     <slot />
   </nav>
 </div>
 
 <style>
-  :global(.sidebar-swipe-applied) {
+  .sidebar-swipe-applied {
     width: 100%;
     position: fixed;
     overflow-y: overlay;
     height: 100%;
     transition: background 0.5s ease;
     background: rgba(128, 98, 98, 0);
-    display: none;
+    display: block;
   }
-  :global(.sidebar-swipe-applied :first-child) {
+  .sidebar-swipe-applied :first-child {
     min-height: 100%;
   }
-  :global(.sidebar-swipe-applied.sb-opened) {
-    display: block;
+  .sidebar-swipe-applied.closed {
+    display: none;
   }
 </style>

@@ -24,11 +24,9 @@ class Emitter {
   events = new Map();
   on(event, fn) {
     const fns = this.events.get(event) || [];
-    // 		console.log(event,fns)
     this.events.set(event, fns.concat(fn));
   }
   emit(event, ...data) {
-    // 		console.log(this.events.get(event)[0])
     this.events.get(event).forEach((fn) => fn(...data));
   }
   clear() {
@@ -76,7 +74,7 @@ export default (
 
   //the max screen width in which the sidebar applies
   let endTranslate = 0;
-  let beforeEndTranslate = 0; //should be abs & represents current translation value
+  let beforeEndTranslate = 0; //should be math.abs & represents current translation value
   let prevcx = 0; // previous clientX useful for touchmove
   let wasApplied = false;
   let touchType;
@@ -99,7 +97,7 @@ export default (
   const open = () => {
     if (applied.get()) {
       node.firstElementChild.style.float = right ? 'right' : 'left';
-      node.classList.add('sb-opened');
+      node.classList.remove('closed');
       timeouts.concat(
         setTimeout(() => {
           endTranslate = 0;
@@ -119,7 +117,7 @@ export default (
       timeouts.concat(
         setTimeout(() => {
           opened.set(false);
-          node.classList.remove('sb-opened');
+          node.classList.add('closed');
         }, transitionDuration)
       );
     }
